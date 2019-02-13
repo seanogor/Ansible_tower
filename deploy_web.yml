@@ -1,52 +1,40 @@
 ---
--	name: deploy and start Apache
-	hosts: node01
-	vars:
-		apache_package: httpd
-		firewall_package: firewalld
-		web_service: httpd
-		firewall_service: firewalld			
-		rule: http
-	tasks:
-	
-		-	name: install and update latest packages
-			yum:
-				name:
-				- "{{ apache_package }}"
-				- "{{ firewall_package }}"
-				state: latest
+- name: deploy and start Apache
+  hosts: node01
+  
+  tasks:
+	- name: install and update apache pkg
+	    yum:
+	    name: httpd
+	    state: latest
+	    
+	 - name: install and update firewall pkg
+	    yum:
+	    name: firewalld
+	    state: latest
 
-		-	name: start and enable {{ firewall_service }}
-			service:
-				name: "{{ firewall_service }}"
-				enabled: true
-				state: started
+	 - name: start and enable firewalld
+	    service:
+		name: firewalld
+		enabled: true
+		state: started
 
-		-	name: create web content
-			copy:
-				content: "Welcome at the Ansible maanged Web Server"
-				dest: /var/www/html/index.html
+	 - name: create web content
+	     copy:
+		content: "Welcome Cloudten Team from GITHUB"
+		dest: /var/www/html/index.html
 
-		-	name: start and enable {{ web_service }}
-			service:
-				name: "{{ web_service }}"
-				enabled: true
-				state: started
+	 - name: start and enable httpd
+	     service:
+		name: httpd
+		enabled: true
+		state: started
 
-		-	name: open firewall for {{ rule }}
-			firewalld:
-				service: "{{ rule }}"
-				permanent: true
-				immediate: true
-				state: enabled
-
--	name: Verify the Web Server
-	hosts: localhost
-	become: false
-	tasks:
-		-	name: Test that Webserver is available
-			uri:
-				url: http://node01
-				status_code: 200
+	 - name: open firewall for http
+	      firewalld:
+		service: http
+		permanent: true
+		immediate: true
+		state: enabled
 
 ...
