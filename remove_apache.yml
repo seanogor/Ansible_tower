@@ -1,0 +1,49 @@
+---
+- name: deploy and start Apache
+  hosts: node01
+  user: ansible
+  sudo: yes
+  #vars:
+   # apache_package: httpd
+    #firewall_package: firewalld
+    #web_service: httpd
+    #firewall_service: firewalld
+    #rule: http
+
+  tasks:
+
+    - name: install and update firewall package
+      yum:
+         name: firewalld
+         state: latest
+    - name: install and update httpd package
+      yum:
+        name: httpd
+        state: latest
+
+    - name: start and enable firewalld
+      service:
+          name: firewalld
+          enabled: true
+          state: started
+
+    - name: create web content
+      copy:
+        content: "Welcome Cloudten!!"
+        dest: /var/www/html/index.html
+        mode: 0444
+        owner: root
+
+    - name: start and enable httpd
+      service:
+         name: httpd
+         enabled: true
+         state: started
+
+    - name: open firewall for http
+      firewalld:
+            service: http
+            permanent: true
+            immediate: true
+            state: enabled
+...
