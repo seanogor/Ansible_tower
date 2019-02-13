@@ -7,34 +7,34 @@
   yum:
   name: httpd
   state: latest
-	    
-	 - name: install and update firewall pkg
-	    yum:
-	    name: firewalld
-	    state: latest
-
-	 - name: start and enable firewalld
-	    service:
-		name: firewalld
-		enabled: true
-		state: started
-
-	 - name: create web content
-	     copy:
-		content: "Welcome Cloudten Team from GITHUB"
-		dest: /var/www/html/index.html
-
-	 - name: start and enable httpd
-	     service:
-		name: httpd
-		enabled: true
-		state: started
-
-	 - name: open firewall for http
-	      firewalld:
-		service: http
-		permanent: true
-		immediate: true
-		state: enabled
-
-...
+  
+  - name: install and update firewall pkg
+  yum:
+  name: firewalld
+  state: latest
+  
+  - name: start and enable firewalld
+  service:
+  name: firewalld
+  enabled: true
+  state: started
+  
+  - name: create web content
+  copy:
+  content: "Welcome Cloudten Team from GITHUB"
+  dest: /var/www/html/index.html
+  
+  - name: start and enable httpd
+  service:
+  name: httpd
+  enabled: true
+  state: started
+  
+  - name: open firewall for http
+  firewalld:
+  service: http
+  permanent: true
+  immediate: true
+  state: enabled
+  
+  ...
