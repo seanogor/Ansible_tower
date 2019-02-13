@@ -3,10 +3,10 @@
   hosts: node01
   
   tasks:
-	- name: install and update apache pkg
-		yum:
-		name: httpd
-		state: latest
+  - name: install and update apache pkg
+	yum:
+	name: httpd
+	state: latest
 	    
 	 - name: install and update firewall pkg
 	    yum:
