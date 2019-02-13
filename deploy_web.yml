@@ -1,0 +1,52 @@
+---
+-	name: deploy and start Apache
+	hosts: node01
+	vars:
+		apache_package: httpd
+		firewall_package: firewalld
+		web_service: httpd
+		firewall_service: firewalld			
+		rule: http
+	tasks:
+	
+		-	name: install and update latest packages
+			yum:
+				name:
+				- "{{ apache_package }}"
+				- "{{ firewall_package }}"
+				state: latest
+
+		-	name: start and enable {{ firewall_service }}
+			service:
+				name: "{{ firewall_service }}"
+				enabled: true
+				state: started
+
+		-	name: create web content
+			copy:
+				content: "Welcome at the Ansible maanged Web Server"
+				dest: /var/www/html/index.html
+
+		-	name: start and enable {{ web_service }}
+			service:
+				name: "{{ web_service }}"
+				enabled: true
+				state: started
+
+		-	name: open firewall for {{ rule }}
+			firewalld:
+				service: "{{ rule }}"
+				permanent: true
+				immediate: true
+				state: enabled
+
+-	name: Verify the Web Server
+	hosts: localhost
+	become: false
+	tasks:
+		-	name: Test that Webserver is available
+			uri:
+				url: http://node01
+				status_code: 200
+
+...
