@@ -7,7 +7,6 @@
   yum:
     name: httpd
     state: latest
-  
   - name: install and update firewall pkg
   yum:
     name: firewalld
