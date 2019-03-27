@@ -1,9 +1,0 @@
----
-- name: Hello World Playbook
-  connection: local
-  hosts: localhost
-
-  tasks:
-  - debug:
-      msg: "Hello World - icare"
-...
