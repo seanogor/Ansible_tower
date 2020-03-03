@@ -1,6 +1,6 @@
 ---
 - name: Remove Web Application
-  hosts: node01
+  hosts: all
 
   tasks:
   - name: Remove Apache
