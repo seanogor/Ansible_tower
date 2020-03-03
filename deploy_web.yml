@@ -6,20 +6,20 @@
       yum:
         name: httpd
         state: latest
-        become: yes
+      become: yes
         
     - name: install and update firewall pkg
       yum:
         name: firewalld
         state: latest
-        become: yes
+      become: yes
 
     - name: start and enable firewalld
       service:
         name: firewalld
         enabled: true
         state: started
-        become: yes
+      become: yes
 
     - name: create web content
       copy:
@@ -31,7 +31,7 @@
         name: httpd
         enabled: true
         state: started
-        become: yes
+      become: yes
 
     - name: open firewall for http
       firewalld:
@@ -39,4 +39,4 @@
         permanent: true
         immediate: true
         state: enabled
-        become: yes
+      become: yes
