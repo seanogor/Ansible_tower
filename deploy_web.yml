@@ -1,6 +1,6 @@
 ---
 - name: deploy and start Apache
-  hosts: node01
+  hosts: all
   
   tasks:
   - name: install and update apache pkg
