@@ -8,11 +8,11 @@
         state: latest
         become: yes
         
-      - name: install and update firewall pkg
-        yum:
-          name: firewalld
-          state: latest
-          become: yes
+    - name: install and update firewall pkg
+      yum:
+        name: firewalld
+        state: latest
+        become: yes
 
     - name: start and enable firewalld
       service:
